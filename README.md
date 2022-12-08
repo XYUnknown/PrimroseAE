@@ -1,9 +1,36 @@
 # Getting Start
-## Dependencies
-- Rust 1.60.0-nightly
+## Logging into the VM and locating the artifact
+- user name: user
+- password: helloworld
+- artifact location: `/home/user/Documents/PrimroseAE/`
+
+## Overview of dependencies
+- Rust 1.67.0-nightly
 - Racket 8.1 or later
 - Rosette
   - We used the Z3 backend in this project
+- These dependencies are all pre-installed, to check they are installed correctly:
+  - Type command: `rustc --version` in terminal, you should get:
+    ```
+    rustc 1.67.0-nightly (01fbc6ae7 2022-12-07)
+    ```
+  - Type command: `racket --version` in terminal, you should get:
+    ```
+    Welcome to Racket v8.6 [cs].
+    ```
+
+## Basic execution of the tool
+- Make sure you are under the directory `PrimroseAE`
+- Make sure the program with property specifications is under the directory `./spec_code/`
+- Run the tool with command:
+```
+cargo run [input.rs] [output_dir_name] [model_size]
+```
+For example:
+```
+cargo run example_unique.rs unique 3
+```
+- The generated file will appear in the directory `./gen_code/`
 
 ## File structure
 ```
@@ -88,20 +115,6 @@
 - `./timeall.sh` is the script running every script located in `./scripts/` measuring the solver's selection time introduced in section 7.2
 - `./timetests.sh` is the script measuring the time for running all propert based tests reported in section 7.1
 - `./Cargo.toml`, `./Cargo.lock` and `rust-toolchain.toml` are Rust package and compiler configuration files.
-
-
-## Basic execution of the tool
-- Make sure you are under the directory `PrimroseAE`
-- Make sure the program with property specifications is under the directory `./spec_code/`
-- Run the tool with command:
-```
-cargo run [input.rs] [output_dir_name] [model_size]
-```
-For example:
-```
-cargo run example_unique.rs unique 3
-```
-- The generated file will appear in the directory `./gen_code/`
 
 # Overview of Claims
 ## Supported claims
