@@ -1,6 +1,4 @@
 #![allow(unused)]
-#![feature(map_first_last)]
-#![feature(const_btree_new)]
 #![feature(linked_list_cursors)]
 
 pub mod parser;
