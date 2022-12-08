@@ -84,13 +84,7 @@ pub fn process_bound_decl(ctx: &InforMap) -> Result<String, ErrorMessage> {
     Ok(code)
 }
 
-/**
- * There can be multiple container decls in a file
- * generating all possible choices for each container decl
- * will result in a combinatorial explosion of generated files
- * In this artifact, for simplicity, our input file only contains
- * one container decl, and we generate all possible choices for it
- */
+// Generate the code ro replace the container delcaration in property specification
 pub fn process_con_decl(ctx: &InforMap, prop_specs: &PropSpecs) -> Result<Vec<String>, ErrorMessage> {
     let mut code = String::new();
     // initialise a vector of generated container code
@@ -100,7 +94,7 @@ pub fn process_con_decl(ctx: &InforMap, prop_specs: &PropSpecs) -> Result<Vec<St
     if cons.len() > 1 {
         for (id, tag) in ctx.iter() {
             match tag {
-                Tag::Con(elem_ty, i_name, tags) => { // Our examples in this artifact only have one container decl
+                Tag::Con(elem_ty, i_name, tags) => {
                     let prop_descs: Vec<Description> = 
                         tags.iter()
                         .filter(| t | t.is_prop_tag())
@@ -134,7 +128,7 @@ pub fn process_con_decl(ctx: &InforMap, prop_specs: &PropSpecs) -> Result<Vec<St
     } else {
         for (id, tag) in ctx.iter() {
             match tag {
-                Tag::Con(elem_ty, i_name, tags) => { // Our examples in this artifact only have one container decl
+                Tag::Con(elem_ty, i_name, tags) => {
                     let prop_descs: Vec<Description> = 
                         tags.iter()
                         .filter(| t | t.is_prop_tag())
@@ -152,7 +146,6 @@ pub fn process_con_decl(ctx: &InforMap, prop_specs: &PropSpecs) -> Result<Vec<St
                                 return Err("Unable to find a struct which matches the specification in the library".to_string());
                             } else {
                                 let opt = struct_choices.join(", ");
-                                // code = code + &gen_output_code(id, elem_ty, &struct_choices[0], i_name, &opt)
                                 for struct_choice in struct_choices {
                                     gen_con_code.push(gen_output_code(id, elem_ty, &struct_choice, i_name, &opt));
                                 }
