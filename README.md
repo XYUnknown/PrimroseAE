@@ -77,7 +77,7 @@ This artifact supports the claims made in the paper by containing:
   - Make sure you are in the directory `PrimroseAE`
   - Run command: `cargo run example_stack.rs stack 3`
   - Generated code can be found under the directory `./gen_code/stack/`
-  - - To compile the generated Rust code, add it to `Cargo.toml` as above and then execute it via `cargo run`
+    - To compile the generated Rust code, add it to `Cargo.toml` as above and then execute it via `cargo run`
 
 ## Running property based testing from section 7.1
 - Make sure you are in the directory `PrimroseAE`
