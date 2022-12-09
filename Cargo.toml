@@ -73,6 +73,6 @@ path = "mem_profiling/uvec_lazy_256m.rs"
 name = "uveclazy512"
 path = "mem_profiling/uvec_lazy_512m.rs"
 
-#[[bin]]
-#name = "unique"
-#path = "gen_code/unique/unique0.rs"
+[[bin]]
+name = "unique"
+path = "gen_code/unique/unique0.rs"

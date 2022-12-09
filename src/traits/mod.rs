@@ -14,8 +14,7 @@ pub trait Stack<T> {
     fn pop(&mut self) -> Option<T>;
 }
 
-// random access
-pub trait RandomAccess<T> {
+pub trait Indexable<T> {
     fn first(&mut self) -> Option<&T>;
     fn last(&mut self) -> Option<&T>;
     fn nth(&mut self, n: usize) -> Option<&T>;

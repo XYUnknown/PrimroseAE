@@ -5,7 +5,7 @@ rust-eager-sorted-vec-spec primrose::library::eager_sorted_vector::EagerSortedVe
 use std::vec::Vec;
 use std::slice::Iter;
 use std::ops::Deref;
-use crate::traits::{Container, Stack, RandomAccess};
+use crate::traits::{Container, Stack, Indexable};
 use std::iter::FromIterator;
 
 use proptest::prelude::*;
@@ -173,9 +173,9 @@ impl<T: Ord> Container<T> for EagerSortedVec<T> {
 }
 
 /*IMPL*
-RandomAccess
+Indexable
 *ENDIMPL*/
-impl<T: Ord> RandomAccess<T> for EagerSortedVec<T> {
+impl<T: Ord> Indexable<T> for EagerSortedVec<T> {
     /*LIBSPEC*
     /*OPNAME*
     first op-first pre-first post-first
@@ -305,7 +305,7 @@ proptest! {
         //pre
         assert_eq!(abs_list, abs_list.sort());
         //post
-        let elem = RandomAccess::<String>::first(v);
+        let elem = Indexable::<String>::first(v);
         let abs_first = first(&abs_list);
         assert_eq!(elem, abs_first);
         assert_eq!(abstraction(v.clone()), abs_list);
@@ -317,7 +317,7 @@ proptest! {
         //pre
         assert_eq!(abs_list, abs_list.sort());
         //post
-        let elem = RandomAccess::<String>::last(v);
+        let elem = Indexable::<String>::last(v);
         let abs_last = last(&abs_list);
         assert_eq!(elem, abs_last);
         assert_eq!(abstraction(v.clone()), abs_list);
@@ -329,7 +329,7 @@ proptest! {
         //pre
         assert_eq!(abs_list, abs_list.sort());
         //post
-        let elem = RandomAccess::<String>::nth(v, n.clone());
+        let elem = Indexable::<String>::nth(v, n.clone());
         let abs_nth = nth(&abs_list, n);
         assert_eq!(elem, abs_nth);
         assert_eq!(abstraction(v.clone()), abs_list);

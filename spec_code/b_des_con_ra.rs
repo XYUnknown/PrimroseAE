@@ -2,7 +2,7 @@
 property descending<T> {
     \c -> ((for-all-consecutive-pairs c) geq?)
 }
-type DescendingCon<T> = {c impl (Container, RandomAccess) | (descending c)}
+type DescendingCon<T> = {c impl (Container, Indexable) | (descending c)}
 *ENDSPEC*/
 
 fn main () {

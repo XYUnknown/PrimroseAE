@@ -4,7 +4,7 @@ rust-btreeset-spec std::collections::BTreeSet
 
 use std::collections::BTreeSet;
 use std::iter::FromIterator;
-use crate::traits::{Container, RandomAccess};
+use crate::traits::{Container, Indexable};
 use crate::proptest::*;
 
 use proptest::prelude::*;
@@ -102,9 +102,9 @@ impl<T: Ord> Container<T> for BTreeSet<T> {
 }
 
 /*IMPL*
-RandomAccess
+Indexable
 *ENDIMPL*/
-impl<T: Ord> RandomAccess<T> for BTreeSet<T> {
+impl<T: Ord> Indexable<T> for BTreeSet<T> {
     /*LIBSPEC*
     /*OPNAME*
     first op-first pre-first post-first
@@ -231,7 +231,7 @@ proptest!{
         //pre
         assert_eq!(abs_list, unique(&abs_list.sort()));
         //post
-        let elem = RandomAccess::<String>::first(t);
+        let elem = Indexable::<String>::first(t);
         let abs_first = first(&abs_list);
         assert_eq!(elem, abs_first);
         assert_eq!(abstraction(t.clone()), abs_list);
@@ -243,7 +243,7 @@ proptest!{
         //pre
         assert_eq!(abs_list, unique(&abs_list.sort()));
         //post
-        let elem = RandomAccess::<String>::last(t);
+        let elem = Indexable::<String>::last(t);
         let abs_last = last(&abs_list);
         assert_eq!(elem, abs_last);
         assert_eq!(abstraction(t.clone()), abs_list);
@@ -255,30 +255,9 @@ proptest!{
         //pre
         assert_eq!(abs_list, unique(&abs_list.sort()));
         //post
-        let elem = RandomAccess::<String>::nth(t, n.clone());
+        let elem = Indexable::<String>::nth(t, n.clone());
         let abs_nth = nth(&abs_list, n);
         assert_eq!(elem, abs_nth);
         assert_eq!(abstraction(t.clone()), abs_list);
     }
 }
-
-// #[cfg(test)]
-// mod tests {
-//     use crate::traits::{Container, RandomAccess};
-//     use std::collections::BTreeSet;
-
-//     #[test]
-//     fn test_treeset_container_trait() {
-//         let set : &mut dyn Container<u32> = &mut BTreeSet::<u32>::new();
-//         assert_eq!(set.len(), 0);
-//         set.insert(1);
-//         set.insert(4);
-//         assert_eq!(set.len(), 2);
-//         assert_eq!(set.remove(9), None);
-//         assert_eq!(set.remove(1), Some(1));
-//         assert_eq!(set.len(), 1);
-//         assert!(set.contains(&4));
-//         set.clear();
-//         assert_eq!(set.len(), 0);
-//     }
-// }

@@ -3,7 +3,7 @@ rust-vec-spec std::vec::Vec
 *ENDLIBSPEC-NAME*/
 
 use std::vec::Vec;
-use crate::traits::{Container, Stack, RandomAccess};
+use crate::traits::{Container, Stack, Indexable};
 use crate::proptest::*;
 
 use proptest::prelude::*;
@@ -135,9 +135,9 @@ impl<T> Stack<T> for Vec<T> {
 }
 
 /*IMPL*
-RandomAccess
+Indexable
 *ENDIMPL*/
-impl<T> RandomAccess<T> for Vec<T> {
+impl<T> Indexable<T> for Vec<T> {
     /*LIBSPEC*
     /*OPNAME*
     first op-first pre-first post-first
@@ -244,7 +244,7 @@ proptest! {
     #[test]
     fn test_vec_first(ref mut v in vec(".*", 0..100)) {
         let abs_list = abstraction(v.clone());
-        let elem = RandomAccess::<String>::first(v);
+        let elem = Indexable::<String>::first(v);
         let abs_first = first(&abs_list);
         assert_eq!(elem, abs_first);
         assert_eq!(abstraction(v.clone()), abs_list);
@@ -253,7 +253,7 @@ proptest! {
     #[test]
     fn test_vec_last(ref mut v in vec(".*", 0..100)) {
         let abs_list = abstraction(v.clone());
-        let elem = RandomAccess::<String>::last(v);
+        let elem = Indexable::<String>::last(v);
         let abs_last = last(&abs_list);
         assert_eq!(elem, abs_last);
         assert_eq!(abstraction(v.clone()), abs_list);
@@ -262,7 +262,7 @@ proptest! {
     #[test]
     fn test_vec_nth(ref mut v in vec(".*", 0..100), n in 0usize..100) {
         let abs_list = abstraction(v.clone());
-        let elem = RandomAccess::<String>::nth(v, n.clone());
+        let elem = Indexable::<String>::nth(v, n.clone());
         let abs_nth = nth(&abs_list, n);
         assert_eq!(elem, abs_nth);
         assert_eq!(abstraction(v.clone()), abs_list);
@@ -285,38 +285,3 @@ proptest! {
         assert_eq!(elem.map(|x| Arc::new(x)), abs_elem);
     }
 }
-
-// #[cfg(test)]
-// mod tests {
-//     use crate::traits::{Container, RandomAccess};
-//     use std::vec::Vec;
-
-//     #[test]
-//     fn test_vec_container_trait() {
-//         let vec : &mut dyn Container<u32> = &mut Vec::<u32>::new();
-//         assert_eq!(vec.len(), 0);
-//         vec.insert(1);
-//         vec.insert(4);
-//         assert_eq!(vec.len(), 2);
-//         assert_eq!(vec.remove(9), None);
-//         assert_eq!(vec.remove(1), Some(1));
-//         assert_eq!(vec.len(), 1);
-//         assert!(vec.contains(&4));
-//         vec.clear();
-//         assert_eq!(vec.len(), 0);
-//         //assert_eq!(vec.pop(), None); // error
-//     }
-
-//     #[test]
-//     fn test_vec_with_position() {
-//         trait ContainerRandomAccess<T> : Container<T> + RandomAccess<T> {}
-//         impl<T: Ord> ContainerRandomAccess<T> for Vec<T> {}
-//         let vec : &mut dyn ContainerRandomAccess<u32> = &mut Vec::<u32>::new();
-//         vec.insert(1);
-//         vec.insert(4);
-//         vec.insert(2);
-//         assert_eq!(vec.first(), Some(&1));
-//         assert_eq!(vec.last(), Some(&2));
-//         assert_eq!(vec.nth(1), Some(&4));
-//     }
-// }

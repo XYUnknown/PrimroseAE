@@ -6,7 +6,7 @@ property ascending<T> {
     \c -> ((for-all-consecutive-pairs c) leq?)
 }
 
-type StrictlyAscendingCon<S> = {c impl (Container, RandomAccess) | ((unique c) and (ascending c))}
+type StrictlyAscendingCon<S> = {c impl (Container, Indexable) | ((unique c) and (ascending c))}
 *ENDSPEC*/
 
 fn main () {

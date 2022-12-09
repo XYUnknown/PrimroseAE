@@ -8,7 +8,7 @@ use std::marker::PhantomData;
 use std::iter::FromIterator;
 // nightly features
 use std::collections::linked_list::CursorMut;
-use crate::traits::{Container, Stack, RandomAccess};
+use crate::traits::{Container, Stack, Indexable};
 use crate::proptest::*;
 use proptest::prelude::*;
 use proptest::collection::linked_list;
@@ -149,9 +149,9 @@ impl<T> Stack<T> for LinkedList<T> {
 }
 
 /*IMPL*
-RandomAccess
+Indexable
 *ENDIMPL*/
-impl<T> RandomAccess<T> for LinkedList<T> {
+impl<T> Indexable<T> for LinkedList<T> {
     /*LIBSPEC*
     /*OPNAME*
     first op-first pre-first post-first
@@ -276,7 +276,7 @@ proptest! {
     #[test]
     fn test_list_first(ref mut l in linked_list(".*", 0..100)) {
         let abs_list = abstraction(l.clone());
-        let elem = RandomAccess::<String>::first(l);
+        let elem = Indexable::<String>::first(l);
         let abs_first = first(&abs_list);
         assert_eq!(elem, abs_first);
         assert_eq!(abstraction(l.clone()), abs_list);
@@ -285,7 +285,7 @@ proptest! {
     #[test]
     fn test_list_last(ref mut l in linked_list(".*", 0..100)) {
         let abs_list = abstraction(l.clone());
-        let elem = RandomAccess::<String>::last(l);
+        let elem = Indexable::<String>::last(l);
         let abs_last = last(&abs_list);
         assert_eq!(elem, abs_last);
         assert_eq!(abstraction(l.clone()), abs_list);
@@ -294,7 +294,7 @@ proptest! {
     #[test]
     fn test_list_nth(ref mut l in linked_list(".*", 0..100), n in 0usize..100) {
         let abs_list = abstraction(l.clone());
-        let elem = RandomAccess::<String>::nth(l, n.clone());
+        let elem = Indexable::<String>::nth(l, n.clone());
         let abs_nth = nth(&abs_list, n);
         assert_eq!(elem, abs_nth);
         assert_eq!(abstraction(l.clone()), abs_list);
@@ -317,68 +317,3 @@ proptest! {
         assert_eq!(elem.map(|x| Arc::new(x)), abs_elem);
     }
 }
-
-
-// #[cfg(test)]
-// mod tests {
-//     use crate::traits::{Container, Stack, RandomAccess};
-//     use crate::library::list::{Constructor, Con};
-//     use std::collections::LinkedList;
-
-//     #[test]
-//     fn test_list_container_trait() {
-//         //type Foo<T> = dyn Container<T>;
-//         //let list : &mut Foo<u32> = &mut LinkedList::<u32>::new();
-//         let list : &mut dyn Container<u32> = &mut LinkedList::<u32>::new();
-//         assert_eq!(list.len(), 0);
-//         list.insert(1);
-//         list.insert(4);
-//         assert_eq!(list.len(), 2);
-//         assert_eq!(list.remove(9), None);
-//         assert_eq!(list.remove(1), Some(1));
-//         assert_eq!(list.len(), 1);
-//         assert!(list.contains(&4));
-//         list.clear();
-//         assert_eq!(list.len(), 0);
-//         //assert_eq!(list.pop_back(), None); // error
-//     }
-
-//     #[test]
-//     fn test_list_constructor() {
-//         let mut list = Con::<u32>::new();
-//         assert_eq!(list.len(), 0);
-//         list.insert(1);
-//         // assert_eq!(list.pop_back(), None);
-//     }
-
-//     #[test]
-//     fn test_list_combo_trait() {
-//         trait ContainerStack<T> : Container<T> + Stack<T> {}
-//         impl<T: Ord> ContainerStack<T> for LinkedList<T> {}
-//         let list : &mut dyn ContainerStack<u32> = &mut LinkedList::<u32>::new();
-//         assert_eq!(list.len(), 0);
-//         list.insert(1);
-//         list.insert(4);
-//         assert_eq!(list.len(), 2);
-//         assert_eq!(list.remove(9), None);
-//         assert_eq!(list.remove(1), Some(1));
-//         assert_eq!(list.len(), 1);
-//         assert!(list.contains(&4));
-//         list.clear();
-//         assert_eq!(list.len(), 0);
-//         //assert_eq!(list.pop_back(), None); // error
-//     }
-
-//     #[test]
-//     fn test_list_with_position() {
-//         trait ContainerRandomAccess<T> : Container<T> + RandomAccess<T> {}
-//         impl<T: Ord> ContainerRandomAccess<T> for LinkedList<T> {}
-//         let list : &mut dyn ContainerRandomAccess<u32> = &mut LinkedList::<u32>::new();
-//         list.insert(1);
-//         list.insert(4);
-//         list.insert(2);
-//         assert_eq!(list.first(), Some(&1));
-//         assert_eq!(list.last(), Some(&2));
-//         assert_eq!(list.nth(1), Some(&4));
-//     }
-// }

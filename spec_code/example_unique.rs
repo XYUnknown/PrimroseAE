@@ -3,7 +3,7 @@ property unique<T> {
     \c <: (Container) -> ((for-all-elems c) \a -> ((unique-count? a) c))
 }
 
-type UniqueCon<S> = {c impl (Container, RandomAccess) | (unique c)}
+type UniqueCon<S> = {c impl (Container, Indexable) | (unique c)}
 *ENDSPEC*/
 
 fn main () {
