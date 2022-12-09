@@ -15,7 +15,7 @@ use im::conslist::{ConsList};
 use im::conslist;
 use std::sync::Arc;
 
-// A Unique Vector
+// A Unique and Ascending Vector
 #[derive(Debug, Clone)]
 pub struct LazyUniqueVec<T> {
     v: Vec<T>,
@@ -364,24 +364,3 @@ proptest! {
         assert_eq!(abstraction(v.clone()), abs_list);
     }
 }
-
-// #[cfg(test)]
-// mod tests {
-//     use crate::library::lazy_unique_vector::LazyUniqueVec;
-//     /** Unique Vector*/
-//     #[test]
-//     fn unique_vec_creation() {
-//         let mut vec = LazyUniqueVec::<u32>::new();
-//         assert_eq!(vec.len(), 0);
-//     }
-
-//     #[test]
-//     fn unique_vec_contains() {
-//         let mut vec = LazyUniqueVec::<u32>::new();
-//         for i in 0..10 {
-//             vec.push(i);
-//         }
-//         assert_eq!(vec.contains(&10), false);
-//         assert_eq!(vec.contains(&6), true);
-//     }
-// }

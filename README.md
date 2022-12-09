@@ -39,10 +39,11 @@ This artifact supports the claims made in the paper by containing:
   - Make sure you are in the directory `PrimroseAE`
   - Run command: `cargo run example_unique.rs unique 3`
   - Generated code can be found in the directory `./gen_code/unique/`
-  - For this example we expect that three files each with a different container implementation are generated:
+  - For this example we expect that four files each with a different container implementation are generated:
     - `./gen_code/unique/unique0.rs`
     - `./gen_code/unique/unique1.rs`
     - `./gen_code/unique/unique2.rs`
+    - `./gen_code/unique/unique3.rs`
   - To compile the generated Rust code, go to `Cargo.toml`, add at the end for the code you want to compile:
     ```
     [[bin]]
@@ -56,11 +57,16 @@ This artifact supports the claims made in the paper by containing:
     [[bin]]
     name = "unique2"
     path = "gen_code/unique/unique2.rs"
+
+    [[bin]]
+    name = "unique2"
+    path = "gen_code/unique/unique3.rs"
     ```
   - Then you can compile and execute the generated file with:
     - `cargo run --bin unique0`
     - `cargo run --bin unique1`
     - `cargo run --bin unique2`
+    - `cargo run --bin unique3`
 
 - To run the *unique and ascending (strictly ascending) container example* from the paper:
   - Make sure you are in the directory `PrimroseAE`
